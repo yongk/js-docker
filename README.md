@@ -37,6 +37,13 @@ directory.
 [Download](https://jdbc.postgresql.org/download.html) the PostgreSQL JDBC driver and place it in the `resources` 
 directory.
 
+# Build the project
+
+To build the project:
+
+```
+docker-compose build
+```
 
 # Serve the applications
 
