@@ -41,7 +41,7 @@ directory.
 # Serve the applications
 
 To run a multi-container application with the Docker CLI, you use the `docker-compose up` command. 
-This command uses the project's [docker-compose.yml] file to deploy a multi-container application:
+This command uses the project's `docker-compose.yml` file to deploy a multi-container application:
 
 ```
 docker-compose up -d
