@@ -1,7 +1,7 @@
 # Introduction
 
 This repository is a fork of the [js-docker](https://github.com/TIBCOSoftware/js-docker) distribution that has been 
-updated to include support for building, configuring, and running JasperReports Server Community Edition in containers.
+updated to include support for building, configuring, and running JasperReports Server **Community Edition** in containers.
 
 <p align="center">
   <img src="https://github.com/Robinyo/js-docker/blob/master/login.png">
