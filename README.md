@@ -12,7 +12,7 @@ containers.
 
 - [Docker Desktop](https://www.docker.com/products/docker-desktop)
 
-# Installation
+# Clone the project
 
 Use Git to clone the repository:
 
@@ -36,3 +36,36 @@ directory.
 
 [Download](https://jdbc.postgresql.org/download.html) the PostgreSQL JDBC driver and place it in the `resources` 
 directory.
+
+
+### Serve the applications
+
+To run a multi-container application with the Docker CLI, you use the `docker-compose up` command. 
+This command uses the project's [docker-compose.yml] file to deploy a multi-container application:
+
+```
+docker-compose up -d
+```
+
+The PostgreSQL, pgAdmin and JasperReports Server containers may take a minute or two to startup. 
+
+You can check the status of the containers using the following command:
+
+```
+docker-compose ps
+```
+
+To check the logs inside your container:
+
+```
+dodocker container logs postgres
+docker container logs pgadmin
+docker container logs jasperreports-server
+docker container logs jasperreports-server-cmdline
+```
+
+You can stop the containers using the following command:
+
+```
+docker-compose down -v
+```
