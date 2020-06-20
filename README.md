@@ -1,7 +1,7 @@
 <h1 align="center">Container deployment of JasperReports Server Community Edition</h1>
 
 <p align="center">
-  <img src="https://github.com/Robinyo/js-docker/blob/login.png">
+  <img src="https://github.com/Robinyo/js-docker/blob/master/login.png">
 </p>
 
 # Table of contents
