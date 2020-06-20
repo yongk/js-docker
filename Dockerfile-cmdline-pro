@@ -2,16 +2,23 @@
 # This file is subject to the license terms contained
 # in the license file that is distributed with this file.
 
-ARG JAVA_BASE_IMAGE=openjdk:11.0.7-slim
+# set certified JRE image version for the
+# JasperReports Server command line tools
+
+# for JasperReports Server 7.5
+# ARG JAVA_BASE_IMAGE=amazoncorretto:11
+
+ARG JAVA_BASE_IMAGE=openjdk:11.0-slim
+
 FROM ${JAVA_BASE_IMAGE}
 
 ARG POSTGRES_JDBC_DRIVER_VERSION
 ARG JASPERREPORTS_SERVER_VERSION
 ARG EXPLODED_INSTALLER_DIRECTORY
 
-ENV POSTGRES_JDBC_DRIVER_VERSION ${POSTGRES_JDBC_DRIVER_VERSION:-42.2.14}
+ENV POSTGRES_JDBC_DRIVER_VERSION ${POSTGRES_JDBC_DRIVER_VERSION:-42.2.5}
 ENV JASPERREPORTS_SERVER_VERSION ${JASPERREPORTS_SERVER_VERSION:-7.5.0}
-ENV EXPLODED_INSTALLER_DIRECTORY ${EXPLODED_INSTALLER_DIRECTORY:-resources/jasperreports-server-cp-$JASPERREPORTS_SERVER_VERSION-bin}
+ENV EXPLODED_INSTALLER_DIRECTORY ${EXPLODED_INSTALLER_DIRECTORY:-resources/jasperreports-server-pro-$JASPERREPORTS_SERVER_VERSION-bin}
 
 # This Dockerfile requires an exploded JasperReports Server WAR file installer file 
 # in the resources directory below the Dockerfile.
@@ -34,7 +41,7 @@ COPY ${EXPLODED_INSTALLER_DIRECTORY}/buildomatic/bin/*.help /usr/src/jasperrepor
 COPY ${EXPLODED_INSTALLER_DIRECTORY}/buildomatic/bin/app-server /usr/src/jasperreports-server/buildomatic/bin/app-server/
 COPY ${EXPLODED_INSTALLER_DIRECTORY}/buildomatic/bin/groovy /usr/src/jasperreports-server/buildomatic/bin/groovy/
 
-# Supporting resources
+# supporting resources
 COPY ${EXPLODED_INSTALLER_DIRECTORY}/buildomatic/jdbc-dep /usr/src/jasperreports-server/buildomatic/bin/jdbc-dep/
 COPY ${EXPLODED_INSTALLER_DIRECTORY}/buildomatic/install_resources /usr/src/jasperreports-server/buildomatic/install_resources/
 COPY ${EXPLODED_INSTALLER_DIRECTORY}/buildomatic/conf_source /usr/src/jasperreports-server/buildomatic/conf_source/
@@ -42,20 +49,21 @@ COPY ${EXPLODED_INSTALLER_DIRECTORY}/buildomatic/target /usr/src/jasperreports-s
 
 COPY scripts /
 
-COPY resources/postgresql-${POSTGRES_JDBC_DRIVER_VERSION}.jar /usr/src/jasperreports-server/buildomatic/conf_source/db/postgresql/jdbc
-
 RUN echo "apt-get" && \
     echo "nameserver 8.8.8.8" | tee /etc/resolv.conf > /dev/null && \
     chmod +x /*.sh && \
-    /installPackagesForJasperserver-ce-cmdline.sh && \
+    /installPackagesForJasperserver-pro-cmdline.sh && \
 	echo "finished installing packages" && \
 	cp -R /buildomatic /usr/src/jasperreports-server/buildomatic && \
 	rm /installPackagesForJasperserver*.sh && rm -rf /buildomatic && \
 	chmod +x /usr/src/jasperreports-server/buildomatic/js-* && \
 	chmod +x /usr/src/jasperreports-server/buildomatic/bin/*.sh && \
 	chmod +x /usr/src/jasperreports-server/apache-ant/bin/* && \
-    java -version
+    java -version && \
+    wget "https://jdbc.postgresql.org/download/postgresql-${POSTGRES_JDBC_DRIVER_VERSION}.jar"  \
+        -P /usr/src/jasperreports-server/buildomatic/conf_source/db/postgresql/jdbc --no-verbose
 
-# ENTRYPOINT ["/entrypoint-cmdline-ce.sh"]
+ENTRYPOINT ["/entrypoint-cmdline.sh"]
 
+# Default action executed by entrypoint script.
 CMD ["init"]
