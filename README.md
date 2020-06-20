@@ -58,7 +58,7 @@ docker-compose ps
 To check the logs inside your container:
 
 ```
-dodocker container logs postgres
+docker container logs postgres
 docker container logs pgadmin
 docker container logs jasperreports-server
 docker container logs jasperreports-server-cmdline
