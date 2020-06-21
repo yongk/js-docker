@@ -51,7 +51,7 @@ file to deploy a multi-container application:
 docker-compose up -d
 ```
 
-The PostgreSQL, pgAdmin and JasperReports Server containers may take a minute or two to startup. 
+The **PostgreSQL**, **pgAdmin** and **JasperReports Server** containers may take a minute or two to startup. 
 
 Navigate to the JasperReports Server Community Edition welcome page: http://localhost:11001/jasperserver
 
