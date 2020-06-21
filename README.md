@@ -4,10 +4,6 @@ This repository is a fork of the [js-docker](https://github.com/TIBCOSoftware/js
 updated to include support for building, configuring, and running TIBCO JasperReports Server **Community Edition** in 
 containers.
 
-<p align="center">
-  <img src="https://github.com/Robinyo/js-docker/blob/master/login.png">
-</p>
-
 ## Prerequisites
 
 - [Docker Desktop](https://www.docker.com/products/docker-desktop)
@@ -56,23 +52,18 @@ docker-compose up -d
 
 The PostgreSQL, pgAdmin and JasperReports Server containers may take a minute or two to startup. 
 
-You can check the status of the containers using the following command:
+Navigate to the JasperReports Server Community Edition welcome page: http://localhost:11001/jasperserver
 
-```
-docker-compose ps
-```
+You can login using the following credentials:
+* JasperReports Admin User - User ID: jasperadmin and Password: jasperadmin
+* Sample User - User ID: joeuser and Password: joeuser
 
-To check the logs inside your container:
+<p align="center">
+  <img src="https://github.com/Robinyo/js-docker/blob/master/login.png">
+</p>
 
-```
-docker container logs postgres
-docker container logs pgadmin
-docker container logs jasperreports-server
-docker container logs jasperreports-server-cmdline
-```
+JasperReports Server Community Edition landing page:
 
-You can stop the containers using the following command:
-
-```
-docker-compose down -v
-```
+<p align="center">
+  <img src="https://github.com/Robinyo/js-docker/blob/master/landing-page.png">
+</p>
