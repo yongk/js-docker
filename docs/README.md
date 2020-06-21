@@ -1,5 +1,4 @@
 # Documentation
 
-* Developer Documentation
-  * [Working with PostgreSQL](postgres.md)  
+* [Working with PostgreSQL](postgres.md)  
 
