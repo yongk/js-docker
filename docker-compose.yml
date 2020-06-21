@@ -36,7 +36,7 @@ services:
       - "11443:8443"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-#     - ./license:/usr/local/share/jasperserver/license
+      - ./license:/usr/local/share/jasperserver/license
       - ./keystore:/usr/local/share/jasperserver/keystore
     env_file: ./jasperreports-server.env
     environment:
@@ -51,7 +51,7 @@ services:
       context: ./
       dockerfile: Dockerfile-cmdline
     volumes:
-#     - ./license:/usr/local/share/jasperserver/license
+      - ./license:/usr/local/share/jasperserver/license
       - ./keystore:/usr/local/share/jasperserver/keystore
     env_file: ./jasperreports-server.env
     environment:

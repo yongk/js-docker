@@ -29,5 +29,6 @@ Thumbs.db
 /secrets
 /tmp
 /temp
+/pgdata
 
 TODO.txt

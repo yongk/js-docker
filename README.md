@@ -76,3 +76,11 @@ You can stop the containers using the following command:
 ```
 docker-compose down -v
 ```
+
+# Working with PostgreSQL
+
+You can use [pgAdmin](https://www.pgadmin.org/) to manage PostrgeSQL.
+
+Navigate to the pgAdmin Welcome page: http://localhost:5050
+
+Login using the PGADMIN_DEFAULT_EMAIL (admin@pgadmin.org) and PGADMIN_DEFAULT_PASSWORD (secret) credentials:

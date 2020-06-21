@@ -6,17 +6,17 @@
 
 # This script sets up and runs JasperReports Server on container start.
 # Default "run" command, set in Dockerfile, executes run_jasperserver.
-# If webapps/jasperserver-pro does not exist, run_jasperserver 
+# If webapps/jasperserver does not exist, run_jasperserver
 # redeploys webapp. If "jasperserver" database does not exist,
 # run_jasperserver redeploys minimal database.
-# Additional "init" only calls init_database, which will try to recreate 
+# Additional "init" only calls init_database, which will try to recreate
 # database and fail if DB exists.
 
 # Sets script to fail if any command fails.
 set -e
 
 BUILDOMATIC_HOME=${BUILDOMATIC_HOME:-/usr/src/jasperreports-server/buildomatic}
-MOUNTS_HOME=${MOUNTS_HOME:-/usr/local/share/jasperserver-pro}
+MOUNTS_HOME=${MOUNTS_HOME:-/usr/local/share/jasperserver}
 
 KEYSTORE_PATH=${KEYSTORE_PATH:-${MOUNTS_HOME}/keystore}
 export ks=$KEYSTORE_PATH
@@ -29,10 +29,10 @@ export BUILDOMATIC_MODE=script
 # using G1GC - default Java GC in later versions of Java 8 and Java 11
 
 # setting heap based on info:
-# https://medium.com/adorsys/jvm-memory-settings-in-a-container-environment-64b0840e1d9e 
+# https://medium.com/adorsys/jvm-memory-settings-in-a-container-environment-64b0840e1d9e
 # https://stackoverflow.com/questions/49854237/is-xxmaxramfraction-1-safe-for-production-in-a-containered-environment
 # https://www.oracle.com/technetwork/java/javase/8u191-relnotes-5032181.html
-  
+
 # Assuming we are using a Java 8 version beyond 8u191 or Java 11, we can use the Java 10+ JAVA_OPTS
 # for containers
 # Assuming a minimum of 3GB for the container => a max of 2.4GB for heap
@@ -49,9 +49,10 @@ export JAVA_OPTS="$JAVA_OPTS -XX:-UseContainerSupport -XX:MinRAMPercentage=$JAVA
 export ANT_OPTS="$ANT_OPTS @/java11.opts"
 
 initialize_deploy_properties() {
+
   # license could fail
-  config_license
-  
+  # config_license
+
   # If environment is not set, uses default values for postgres
   DB_TYPE=${DB_TYPE:-postgresql}
   DB_USER=${DB_USER:-postgres}
@@ -85,7 +86,7 @@ dbPassword=$DB_PASSWORD
 js.dbName=$DB_NAME
 foodmart.dbName=foodmart
 sugarcrm.dbName=sugarcrm
-webAppName=jasperserver-pro
+webAppName=jasperserver
 ks=$KEYSTORE_PATH
 ksp=$KEYSTORE_PATH
 _EOL_
@@ -113,7 +114,7 @@ _EOL_
 dbPort=$DB_PORT
 _EOL_
   fi
-  
+
   JRS_DEPLOY_CUSTOMIZATION=${JRS_DEPLOY_CUSTOMIZATION:-${MOUNTS_HOME}/deploy-customization}
 
   if [[ -f "$JRS_DEPLOY_CUSTOMIZATION/default_master_additional.properties" ]]; then
@@ -121,7 +122,7 @@ _EOL_
 	# they will have precedence over the ones created above
     cat $JRS_DEPLOY_CUSTOMIZATION/default_master_additional.properties >> ${BUILDOMATIC_HOME}/default_master.properties
   fi
-  
+
 }
 
 test_database_result=nothing
@@ -138,7 +139,7 @@ try_database_connection() {
   local sawJRSDBName=notyet
   local sawConnectionOK=0
   local currentDatabase=
-      
+
   cd ${BUILDOMATIC_HOME}/
 
   while read -r line
@@ -191,11 +192,11 @@ try_database_connection() {
 			;;
 	esac
 	#if [[ $line == *"FATAL: database \"$DB_NAME\" does not exist"* ]]; then
-	  
+
     #elif [[ $sawJRSDBName != "fatal" && $line == *"$DB_NAME"* ]]; then
 	#  sawJRSDBName=true
 	#fi
-	
+
 	# if [[ $line == *"Connection OK"* ]]; then
 	  # sawConnectionOK=$((sawConnectionOK + 1))
 	# fi
@@ -230,7 +231,6 @@ test_database_connection() {
 	done
 }
 
-
 config_license() {
   # load license file from volume
   JRS_LICENSE_FINAL=${JRS_LICENSE:-${MOUNTS_HOME}/license}
@@ -250,27 +250,26 @@ execute_buildomatic() {
 
   # execute buildomatic js-ant targets for installing/configuring
   # JasperReports Server.
-  
+
   cd ${BUILDOMATIC_HOME}/
-  
+
   for i in $@; do
-    # Default buildomatic deploy-webapp-pro target attempts to remove
-    # $CATALINA_HOME/webapps/jasperserver-pro path.
+    # Default buildomatic deploy-webapp-ce target attempts to remove
+    # $CATALINA_HOME/webapps/jasperserver path.
     # This behaviour does not work if mounted volumes are used.
     # Using unzip to populate webapp directory and non-destructive
     # targets for configuration
-    if [ $i == "deploy-webapp-pro" ]; then
+    if [ $i == "deploy-webapp-ce" ]; then
       ./js-ant \
-        set-pro-webapp-name \
+        set-ce-webapp-name \
         deploy-webapp-datasource-configs \
         deploy-jdbc-jar \
-        -DwarTargetDir=$CATALINA_HOME/webapps/jasperserver-pro
+        -DwarTargetDir=$CATALINA_HOME/webapps/jasperserver
     else
       # warTargetDir webaAppName are set as
       # workaround for database configuration regeneration
       ./js-ant $i \
-        -DwarTargetDir=$CATALINA_HOME/webapps/jasperserver-pro
+        -DwarTargetDir=$CATALINA_HOME/webapps/jasperserver
     fi
   done
 }
-
