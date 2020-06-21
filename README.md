@@ -68,7 +68,7 @@ You can check the status of the containers using the following command:
 docker-compose ps
 ```
 
-To check the logs inside your container:
+To check the logs inside a container:
 
 ```
 docker container logs postgres
