@@ -55,8 +55,8 @@ The PostgreSQL, pgAdmin and JasperReports Server containers may take a minute or
 Navigate to the JasperReports Server Community Edition welcome page: http://localhost:11001/jasperserver
 
 You can login using the following credentials:
-* JasperReports Admin User - User ID: jasperadmin and Password: jasperadmin
-* Sample User - User ID: joeuser and Password: joeuser
+* JasperReports Admin User - User ID: `jasperadmin` and Password: `jasperadmin`
+* Sample User - User ID: `joeuser` and Password: `joeuser`
 
 <p align="center">
   <img src="https://github.com/Robinyo/js-docker/blob/master/login.png">
