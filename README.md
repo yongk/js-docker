@@ -62,8 +62,23 @@ You can login using the following credentials:
   <img src="https://github.com/Robinyo/js-docker/blob/master/login.png">
 </p>
 
-JasperReports Server Community Edition landing page:
+You can check the status of the containers using the following command:
 
-<p align="center">
-  <img src="https://github.com/Robinyo/js-docker/blob/master/landing-page.png">
-</p>
+```
+docker-compose ps
+```
+
+To check the logs inside your container:
+
+```
+docker container logs postgres
+docker container logs pgadmin
+docker container logs jasperreports-server
+docker container logs jasperreports-server-cmdline
+```
+
+You can stop the containers using the following command:
+
+```
+docker-compose down -v
+```
