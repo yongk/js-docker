@@ -13,8 +13,8 @@ containers.
 Use Git to clone the repository:
 
 ```
-$ git clone https://github.com/Robinyo/js-docker
-$ cd js-docker
+git clone https://github.com/Robinyo/js-docker
+cd js-docker
 ```
 
 [Download](https://community.jaspersoft.com/project/jasperreports-server/releases) the Community Edition of 
