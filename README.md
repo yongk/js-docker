@@ -10,7 +10,13 @@ Server Community Edition** in containers.
 
 # Clone the project
 
-Use Git to clone the repository:
+Change the current working directory to the location where you want the cloned directory to be:
+
+```
+cd ~/workspace
+```
+
+Clone the project by running the following command:
 
 ```
 git clone https://github.com/Robinyo/js-docker
