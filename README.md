@@ -1,6 +1,6 @@
 # Introduction
 
-This repository is a fork of the [js-docker](https://github.com/TIBCOSoftware/js-docker) distribution that has been 
+This repository is a fork of the [js-docker](https://github.com/TIBCOSoftware/js-docker) repository that has been 
 updated to include support for building, configuring, and running **PostgreSQL**, **pgAdmin** and **TIBCO JasperReports 
 Server Community Edition** in containers.
 
