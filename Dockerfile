@@ -55,9 +55,12 @@ COPY assets/libs $CATALINA_HOME/webapps/jasperserver/WEB-INF/lib/
 # Copy JDBC Driver
 COPY resources/postgresql-${POSTGRES_JDBC_DRIVER_VERSION}.jar /usr/src/jasperreports-server/buildomatic/conf_source/db/postgresql/jdbc/
 
+RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list && \
+	sed -i 's|security.debian.org/debian-security|mirrors.ustc.edu.cn/debian-security|g' /etc/apt/sources.list
+
 RUN echo "nameserver 8.8.8.8" | tee /etc/resolv.conf > /dev/null && \
     chmod +x /*.sh && \
-    /installPackagesForJasperserver-ce.sh > /dev/null && \
+    /installPackagesForJasperserver-ce.sh && \
 	echo "finished installing packages" && \
     rm -rf $CATALINA_HOME/webapps/ROOT && \
     rm -rf $CATALINA_HOME/webapps/docs && \
